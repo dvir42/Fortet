@@ -1,13 +1,13 @@
 package dontuse;
 
 /*** Eclipse Class Decompiler plugin, copyright (c) 2012 Chao Chen (cnfree2000@hotmail.com) ***/
-import java.util.Random;
-
 import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
 
 class LabyrinthTableModel extends AbstractTableModel {
-	private static Random r = new Random();
+
+	private static final long serialVersionUID = 1277654128084703996L;
+
 	private static final ImageIcon DOG_HOUSE = new ImageIcon("pic/doghouse.gif");
 	private static final ImageIcon HOUSE = new ImageIcon("pic/home.gif");
 	private static final Object[][] data;
@@ -33,7 +33,7 @@ class LabyrinthTableModel extends AbstractTableModel {
 	}
 
 	@Override
-	public Class getColumnClass(int paramInt) {
+	public Class<ImageIcon> getColumnClass(int paramInt) {
 		return ImageIcon.class;
 	}
 

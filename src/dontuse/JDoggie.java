@@ -5,6 +5,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 class JDoggie extends JLabel {
+
+	private static final long serialVersionUID = 6027414805797797162L;
+
 	private static final ImageIcon runLeft = new ImageIcon("pic/doggie_l.gif");
 	private static final ImageIcon runRight = new ImageIcon("pic/doggie_r.gif");
 	private static final ImageIcon runDown = new ImageIcon("pic/doggie_d.gif");
@@ -13,14 +16,9 @@ class JDoggie extends JLabel {
 			"pic/dog_stop_r.gif");
 	private static final ImageIcon stopLeft = new ImageIcon(
 			"pic/dog_stop_l.gif");
-	private static final int RIGHT = 1;
-	private static final int LEFT = 2;
-	private static final int DOWN = 3;
-	private static final int UP = 4;
 	private int state = 0;
 
 	private final boolean isRight = true;
-	private final boolean isDown = false;
 
 	public JDoggie() {
 		super(runRight);

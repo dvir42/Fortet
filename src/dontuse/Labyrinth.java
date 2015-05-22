@@ -19,14 +19,6 @@ public class Labyrinth extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 2202343429950227016L;
-	private static final int ROW_HEIGHT = 54;
-	private static final int HCOUNT = 39;
-	private static final int VCOUNT = 27;
-	private static final int MOVE_UP = 0;
-	private static final int MOVE_DOWN = 1;
-	private static final int MOVE_LEFT = 2;
-	private static final int MOVE_RIGHT = 3;
-	private static final int EAT = 4;
 	static final int IS_EMPTY = 0;
 	static final int IS_HOUSE = 1;
 	static final int IS_DOG_H = 2;
@@ -36,7 +28,7 @@ public class Labyrinth extends JFrame implements ActionListener {
 			{ 1, 10, 0, 0, 1, 0, 1, 0 }, { 0, 1, 1, 0, 0, 1, 1, 0 },
 			{ 0, 0, 1, 1, 10, 0, 0, 0 } };
 
-	private final Vector moves = new Vector();
+	private final Vector<Integer> moves = new Vector<Integer>();
 	private final JDoggie doggie = new JDoggie();
 	private final Timer animator;
 	private final JLayeredPane jLayeredPane1;
@@ -155,7 +147,7 @@ public class Labyrinth extends JFrame implements ActionListener {
 
 		if (this.count == 0) {
 			int i = 0;
-			Integer localInteger = (Integer) this.moves.remove(0);
+			Integer localInteger = this.moves.remove(0);
 			switch (localInteger.intValue()) {
 			case 0:
 				this.hMove = 0;
@@ -310,6 +302,7 @@ public class Labyrinth extends JFrame implements ActionListener {
 		return (this.food > 0);
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void main(String[] paramArrayOfString) {
 		new Labyrinth().show();
 	}
