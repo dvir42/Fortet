@@ -33,7 +33,7 @@ public class JPrince extends JLabel {
 	}
 
 	public JPrince() {
-		super(pics[0][0]);
+		super(pics[2][0]);
 	}
 
 }
