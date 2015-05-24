@@ -60,7 +60,7 @@ public class JPrince extends JLabel {
 		set();
 	}
 
-	public void move() {
+	public void step() {
 		status = (status + 1) % 4;
 		set();
 	}
