@@ -32,8 +32,41 @@ public class JPrince extends JLabel {
 		}
 	}
 
+	private int direction;
+	private int status;
+
 	public JPrince() {
-		super(pics[2][0]);
+		status = 0;
+		pointRight();
+	}
+
+	public void pointDown() {
+		direction = 0;
+		set();
+	}
+
+	public void pointLeft() {
+		direction = 1;
+		set();
+	}
+
+	public void pointRight() {
+		direction = 2;
+		set();
+	}
+
+	public void pointUp() {
+		direction = 3;
+		set();
+	}
+
+	public void move() {
+		status = (status + 1) % 4;
+		set();
+	}
+
+	private void set() {
+		setIcon(pics[direction][status]);
 	}
 
 }
