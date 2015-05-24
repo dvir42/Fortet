@@ -13,6 +13,9 @@ public class JPrince extends JLabel {
 	private static final int rows = 4, cols = 4;
 	private static final ImageIcon[][] pics = new ImageIcon[rows][cols];
 
+	public final static int WIDTH;
+	public final static int HEIGHT;
+
 	static {
 		ImageIcon ic = new ImageIcon("imgs/prince.png");
 		int imgHeight = ic.getIconHeight();
@@ -21,13 +24,16 @@ public class JPrince extends JLabel {
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics g = bi.getGraphics();
 		g.drawImage(ic.getImage(), 0, 0, null);
-		int px = 0, py = 0, w = imgWidth / cols, h = imgHeight / rows;
+		int px = 0, py = 0;
+		WIDTH = imgWidth / cols;
+		HEIGHT = imgHeight / rows;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				pics[i][j] = new ImageIcon(bi.getSubimage(px, py, w, h));
-				px += w;
+				pics[i][j] = new ImageIcon(
+						bi.getSubimage(px, py, WIDTH, HEIGHT));
+				px += WIDTH;
 			}
-			py += h;
+			py += HEIGHT;
 			px = 0;
 		}
 	}

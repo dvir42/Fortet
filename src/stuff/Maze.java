@@ -19,7 +19,7 @@ public class Maze {
 	public static final int HEIGHT = 10;
 	public static final int ROW_HEIGHT = 60;
 
-	private static final int MOVE = 1;
+	private static final int MOVE = 2;
 	private int x, y;
 
 	private final JTable table;
@@ -49,10 +49,13 @@ public class Maze {
 		pane.add(table, JLayeredPane.DEFAULT_LAYER);
 		pane.add(prince, JLayeredPane.PALETTE_LAYER);
 		prince.setSize(ROW_HEIGHT, ROW_HEIGHT);
-		prince.setLocation(ROW_HEIGHT / 3 + ROW_HEIGHT / WIDTH, ROW_HEIGHT / 4);
+		System.out.println(JPrince.WIDTH);
+		System.out.println(JPrince.HEIGHT);
+		prince.setLocation(table.getBounds().x + (ROW_HEIGHT - JPrince.WIDTH)
+				/ 2, table.getBounds().y + (ROW_HEIGHT - JPrince.HEIGHT) / 2);
 		frame.setVisible(true);
 		moveCount = 0;
-		timer = new Timer(200, new ActionListener() {
+		timer = new Timer(66, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (moves.isEmpty() && moveCount == 0) {
