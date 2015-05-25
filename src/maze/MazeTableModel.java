@@ -9,11 +9,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
 
+import JStuff.JPrincess;
+
 public class MazeTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = -4347071534736678347L;
 
-	private static final ImageIcon PRINCESS = new ImageIcon("imgs/princess.png");
+	private static final JPrincess PRINCESS = new JPrincess();
 	private static final ImageIcon TREASURE = new ImageIcon("imgs/treasure.png");
 
 	private static final Object[][] data;
