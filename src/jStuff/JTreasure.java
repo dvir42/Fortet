@@ -1,23 +1,20 @@
-package JStuff;
+package jStuff;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
-public class JPrincess extends JLabel {
+public class JTreasure {
 
-	private static final long serialVersionUID = -8660634819580426545L;
-
-	private static final int rows = 4, cols = 3;
+	private static final int rows = 4, cols = 1;
 	private static final ImageIcon[][] pics = new ImageIcon[rows][cols];
 
 	public final static int WIDTH;
 	public final static int HEIGHT;
 
 	static {
-		ImageIcon ic = new ImageIcon("imgs/princess.png");
+		ImageIcon ic = new ImageIcon("imgs/treasure.png");
 		int imgHeight = ic.getIconHeight();
 		int imgWidth = ic.getIconWidth();
 		BufferedImage bi = new BufferedImage(imgWidth, imgHeight,
@@ -38,28 +35,20 @@ public class JPrincess extends JLabel {
 		}
 	}
 
-	public JPrincess() {
-		super(pics[3][0]);
+	private static int count = 0;
+
+	public static ImageIcon step() {
+		if (count < rows)
+			return pics[count++][0];
+		return opened();
 	}
 
-	public void cry() {
-		setIcon(pics[3][0]);
+	public static ImageIcon closed() {
+		return pics[0][0];
 	}
 
-	public void sniffle() {
-		setIcon(pics[3][2]);
-	}
-
-	public void hope() {
-		setIcon(pics[0][1]);
-	}
-
-	public void muchHope() {
-		setIcon(pics[0][2]);
-	}
-
-	public void happy() {
-		setIcon(pics[1][2]);
+	public static ImageIcon opened() {
+		return pics[3][0];
 	}
 
 }

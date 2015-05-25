@@ -1,22 +1,22 @@
 package maze;
 
+import jStuff.JPrincess;
+import jStuff.JTreasure;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
-
-import JStuff.JPrincess;
 
 public class MazeTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = -4347071534736678347L;
 
-	private static final JPrincess PRINCESS = new JPrincess();
-	private static final ImageIcon TREASURE = new ImageIcon("imgs/treasure.png");
+	private static ImageIcon PRINCESS = JPrincess.cry();
+	private static ImageIcon TREASURE = JTreasure.step();
 
 	private static final Object[][] data;
 
@@ -44,8 +44,8 @@ public class MazeTableModel extends AbstractTableModel {
 	}
 
 	@Override
-	public Class<JLabel> getColumnClass(int j) {
-		return JLabel.class;
+	public Class<ImageIcon> getColumnClass(int j) {
+		return ImageIcon.class;
 	}
 
 	static {
