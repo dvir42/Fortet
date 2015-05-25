@@ -31,6 +31,7 @@ public class Maze {
 	private final Timer timer;
 
 	private int moveCount;
+	private int currX, currY;
 
 	public Maze() {
 		JFrame frame = new JFrame("Maze");
@@ -49,12 +50,12 @@ public class Maze {
 		pane.add(table, JLayeredPane.DEFAULT_LAYER);
 		pane.add(prince, JLayeredPane.PALETTE_LAYER);
 		prince.setSize(ROW_HEIGHT, ROW_HEIGHT);
-		System.out.println(JPrince.WIDTH);
-		System.out.println(JPrince.HEIGHT);
 		prince.setLocation(table.getBounds().x + (ROW_HEIGHT - JPrince.WIDTH)
 				/ 2, table.getBounds().y + (ROW_HEIGHT - JPrince.HEIGHT) / 2);
 		frame.setVisible(true);
 		moveCount = 0;
+		currX = 0;
+		currY = 0;
 		timer = new Timer(66, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -70,11 +71,13 @@ public class Maze {
 							x = 0;
 							y = MOVE;
 							prince.pointDown();
+							currY++;
 							break;
 						case Left:
 							x = -MOVE;
 							y = 0;
 							prince.pointLeft();
+							currX--;
 							break;
 						case Open:
 							break;
@@ -84,20 +87,29 @@ public class Maze {
 							x = MOVE;
 							y = 0;
 							prince.pointRight();
+							currX++;
 							break;
 						case Up:
 							x = 0;
 							y = -MOVE;
 							prince.pointUp();
+							currY--;
 							break;
 						default:
 							break;
 						}
 					}
-					prince.setLocation(prince.getLocation().x + x,
-							prince.getLocation().y + y);
-					prince.step();
-					moveCount--;
+					if (currX >= 0 && currX < WIDTH && currY >= 0
+							&& currY < HEIGHT) {
+						prince.setLocation(prince.getLocation().x + x,
+								prince.getLocation().y + y);
+						prince.step();
+						moveCount--;
+					} else {
+						timer.stop();
+						JOptionPane.showMessageDialog(frame,
+								"You fell off the earth", "Failed", 0);
+					}
 				}
 			}
 		});
