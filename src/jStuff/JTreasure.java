@@ -35,9 +35,19 @@ public class JTreasure {
 		}
 	}
 
-	private static int count = 0;
+	private int count;
+	private final boolean full;
 
-	public static ImageIcon step() {
+	public JTreasure(boolean full) {
+		count = 0;
+		this.full = full;
+	}
+
+	public boolean full() {
+		return full;
+	}
+
+	public ImageIcon step() {
 		if (count < rows)
 			return pics[count++][0];
 		return opened();

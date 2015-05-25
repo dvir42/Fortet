@@ -1,11 +1,13 @@
 package maze;
 
 import jStuff.JPrince;
+import jStuff.JTreasure;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
@@ -36,6 +38,8 @@ public class Maze {
 	private int moveCount;
 	private int currX, currY;
 
+	public static JTreasure[][] treasures = new JTreasure[HEIGHT][WIDTH];
+
 	public Maze() {
 		JFrame frame = new JFrame("Maze");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,8 +57,7 @@ public class Maze {
 		pane.add(table, JLayeredPane.DEFAULT_LAYER);
 		pane.add(prince, JLayeredPane.PALETTE_LAYER);
 		prince.setSize(ROW_HEIGHT, ROW_HEIGHT);
-		prince.setLocation(table.getBounds().x + (ROW_HEIGHT - JPrince.WIDTH)
-				/ 2, table.getBounds().y + (ROW_HEIGHT - JPrince.HEIGHT) / 2);
+		prince.setLocation(table.getBounds().x - 5, table.getBounds().y);
 		frame.setVisible(true);
 		moveCount = 0;
 		currX = 0;
@@ -83,8 +86,22 @@ public class Maze {
 							currX--;
 							break;
 						case Open:
+							x = 0;
+							y = 0;
+							moveCount = 0;
+							if (((ImageIcon) table.getValueAt(currY, currX))
+									.equals(JTreasure.closed()))
+								openTreasure(currY, currX);
+							else {
+								timer.stop();
+								JOptionPane.showMessageDialog(frame,
+										"Nothing to open", "Failed", 0);
+							}
 							break;
 						case Pickup:
+							x = 0;
+							y = 0;
+							moveCount = 0;
 							break;
 						case Right:
 							x = MOVE;
@@ -103,12 +120,12 @@ public class Maze {
 						}
 					}
 					if (currX >= 0 && currX < WIDTH && currY >= 0
-							&& currY < HEIGHT) {
+							&& currY < HEIGHT && (x != 0 || y != 0)) {
 						prince.setLocation(prince.getLocation().x + x,
 								prince.getLocation().y + y);
 						prince.step();
 						moveCount--;
-					} else {
+					} else if (x != 0 || y != 0) {
 						timer.stop();
 						JOptionPane.showMessageDialog(frame,
 								"You fell off the earth", "Failed", 0);
@@ -117,6 +134,19 @@ public class Maze {
 			}
 		});
 		timer.start();
+	}
+
+	private void openTreasure(int i, int j) {
+		for (int k = 0; k < 4; k++) {
+			table.setValueAt(treasures[i][j].step(), i, j);
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		if (treasures[i][j].full())
+			System.out.println("yay!");
 	}
 
 	public static void main(String[] args) {

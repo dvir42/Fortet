@@ -16,7 +16,7 @@ public class MazeTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = -4347071534736678347L;
 
 	private static ImageIcon PRINCESS = JPrincess.cry();
-	private static ImageIcon TREASURE = JTreasure.step();
+	private static ImageIcon TREASURE = JTreasure.closed();
 
 	private static final Object[][] data;
 
@@ -52,8 +52,8 @@ public class MazeTableModel extends AbstractTableModel {
 		data = new Object[Maze.HEIGHT][Maze.WIDTH];
 		try {
 			List<String> temp = Files.readAllLines(new File("maze").toPath());
-			for (int i = 0; i < temp.size(); i++)
-				for (int j = 0; j < temp.get(i).split(" ").length; j++)
+			for (int i = 0; i < Maze.HEIGHT; i++)
+				for (int j = 0; j < Maze.WIDTH; j++)
 					switch (Integer.parseInt(temp.get(i).split(" ")[j])) {
 					case 1:
 						data[i][j] = PRINCESS;
@@ -63,6 +63,11 @@ public class MazeTableModel extends AbstractTableModel {
 						break;
 					case 3:
 						data[i][j] = TREASURE;
+						Maze.treasures[i][j] = new JTreasure(false);
+						break;
+					case 4:
+						data[i][j] = TREASURE;
+						Maze.treasures[i][j] = new JTreasure(true);
 						break;
 					default:
 						data[i][j] = null;
