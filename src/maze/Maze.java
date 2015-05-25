@@ -1,4 +1,4 @@
-package stuff;
+package maze;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +11,8 @@ import javax.swing.JTable;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 
+import JStuff.JPrince;
+import user.Move;
 import user.Prince;
 
 public class Maze {

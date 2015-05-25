@@ -1,6 +1,5 @@
 package user;
 
-import stuff.Human;
 
 public class Prince extends Human {
 

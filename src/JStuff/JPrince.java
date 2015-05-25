@@ -1,4 +1,4 @@
-package stuff;
+package JStuff;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

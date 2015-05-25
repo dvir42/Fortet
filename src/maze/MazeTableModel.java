@@ -1,10 +1,12 @@
-package stuff;
+package maze;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
 
 public class MazeTableModel extends AbstractTableModel {
@@ -13,7 +15,6 @@ public class MazeTableModel extends AbstractTableModel {
 
 	private static final ImageIcon PRINCESS = new ImageIcon("imgs/princess.png");
 	private static final ImageIcon TREASURE = new ImageIcon("imgs/treasure.png");
-	private static final ImageIcon PRINCE = new ImageIcon("imgs/prince.png");
 
 	private static final Object[][] data;
 
@@ -41,8 +42,8 @@ public class MazeTableModel extends AbstractTableModel {
 	}
 
 	@Override
-	public Class<ImageIcon> getColumnClass(int j) {
-		return ImageIcon.class;
+	public Class<JLabel> getColumnClass(int j) {
+		return JLabel.class;
 	}
 
 	static {
@@ -53,7 +54,7 @@ public class MazeTableModel extends AbstractTableModel {
 				for (int j = 0; j < temp.get(i).split(" ").length; j++)
 					switch (Integer.parseInt(temp.get(i).split(" ")[j])) {
 					case 1:
-						data[i][j] = PRINCE;
+						data[i][j] = PRINCESS;
 						break;
 					case 2:
 						data[i][j] = PRINCESS;

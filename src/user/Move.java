@@ -1,4 +1,4 @@
-package stuff;
+package user;
 
 public enum Move {
 

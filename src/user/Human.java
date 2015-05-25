@@ -1,4 +1,6 @@
-package stuff;
+package user;
+
+import maze.Maze;
 
 public class Human {
 
