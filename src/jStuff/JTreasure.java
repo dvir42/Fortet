@@ -38,6 +38,9 @@ public class JTreasure {
 	private int count;
 	private final boolean full;
 
+	private final static ImageIcon withRing = new ImageIcon(
+			"imgs/treasurewithring.png");
+
 	public JTreasure(boolean full) {
 		count = 0;
 		this.full = full;
@@ -59,6 +62,10 @@ public class JTreasure {
 
 	public static ImageIcon opened() {
 		return pics[3][0];
+	}
+
+	public static ImageIcon withRing() {
+		return withRing;
 	}
 
 }

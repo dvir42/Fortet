@@ -1,6 +1,7 @@
 package maze;
 
 import jStuff.JPrince;
+import jStuff.JPrincess;
 import jStuff.JTreasure;
 
 import java.awt.event.ActionEvent;
@@ -38,7 +39,12 @@ public class Maze {
 	private int moveCount;
 	private int currX, currY;
 
-	public static JTreasure[][] treasures = new JTreasure[HEIGHT][WIDTH];
+	public static final JTreasure[][] treasures = new JTreasure[HEIGHT][WIDTH];
+
+	public static final boolean[][] blockers = new boolean[HEIGHT][WIDTH];
+
+	private boolean hasRing;
+	public static int princessI, princessJ;
 
 	public Maze() {
 		JFrame frame = new JFrame("Maze");
@@ -62,15 +68,37 @@ public class Maze {
 		moveCount = 0;
 		currX = 0;
 		currY = 0;
+		hasRing = false;
 		timer = new Timer(66, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (moves.isEmpty() && moveCount == 0) {
 					timer.stop();
-					JOptionPane.showMessageDialog(frame, "Good Job",
-							"Successful", 1);
+					if (currX == princessJ && currY == princessI)
+						if (hasRing) {
+							table.setValueAt(JPrincess.happy(), princessI,
+									princessJ);
+							JOptionPane.showMessageDialog(frame, "Good Job",
+									"Successful", 1);
+						} else
+							JOptionPane.showMessageDialog(frame,
+									"You have no ring", "Failed", 0);
+
+					else if (blockers[currY][currX]) {
+						timer.stop();
+						JOptionPane.showMessageDialog(frame, "You crashed",
+								"Failed", 0);
+					} else
+						JOptionPane.showMessageDialog(frame,
+								"You haven't arrived at the princess",
+								"Failed", 0);
 				} else {
 					if (moveCount == 0) {
+						if (blockers[currY][currX]) {
+							timer.stop();
+							JOptionPane.showMessageDialog(frame, "You crashed",
+									"Failed", 0);
+						}
 						moveCount = ROW_HEIGHT / MOVE;
 						switch (moves.remove(0)) {
 						case Down:
@@ -102,6 +130,14 @@ public class Maze {
 							x = 0;
 							y = 0;
 							moveCount = 0;
+							if (((ImageIcon) table.getValueAt(currY, currX))
+									.equals(JTreasure.withRing()))
+								pickup(currY, currX);
+							else {
+								timer.stop();
+								JOptionPane.showMessageDialog(frame,
+										"Nothing to pick up", "Failed", 0);
+							}
 							break;
 						case Right:
 							x = MOVE;
@@ -146,7 +182,18 @@ public class Maze {
 			}
 		}
 		if (treasures[i][j].full())
-			System.out.println("yay!");
+			table.setValueAt(JTreasure.withRing(), i, j);
+	}
+
+	private void pickup(int i, int j) {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		table.setValueAt(JTreasure.opened(), currY, currX);
+		hasRing = true;
+		table.setValueAt(JPrincess.sniffle(), princessI, princessJ);
 	}
 
 	public static void main(String[] args) {

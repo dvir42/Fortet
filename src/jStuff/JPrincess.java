@@ -43,16 +43,8 @@ public class JPrincess {
 		return pics[3][2];
 	}
 
-	public static ImageIcon hope() {
-		return pics[0][1];
-	}
-
-	public static ImageIcon muchHope() {
-		return pics[0][2];
-	}
-
 	public static ImageIcon happy() {
-		return pics[1][2];
+		return pics[0][2];
 	}
 
 }
