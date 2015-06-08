@@ -54,6 +54,13 @@ public class Human {
 	}
 
 	/**
+	 * Adds a wait move to moves
+	 */
+	public void waitHere() {
+		addMove(Move.Wait);
+	}
+
+	/**
 	 * Adds a move to moves
 	 */
 	private void addMove(Move move) {

@@ -188,7 +188,7 @@ public class Maze {
 							prince.pointUp();
 							currY--;
 							break;
-						default:
+						case Wait:
 							break;
 						}
 					}
