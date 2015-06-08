@@ -56,8 +56,8 @@ public class Human {
 	/**
 	 * Adds a wait move to moves
 	 */
-	public void waitHere() {
-		addMove(Move.Wait);
+	public void stay() {
+		addMove(Move.Stay);
 	}
 
 	/**

@@ -15,15 +15,8 @@ public class Prince extends Human {
 	 */
 	public static void go() {
 		Prince prince = new Prince();
-		prince.moveLeft();
-		prince.moveRight();
-		prince.moveLeft();
-		prince.moveRight();
-		prince.moveLeft();
-		prince.moveRight();
-		prince.moveLeft();
-		prince.moveRight();
-		prince.moveLeft();
+		for (int i = 0; i < 3; i++) {
+			prince.stay();
+		}
 	}
-
 }
