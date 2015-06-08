@@ -27,7 +27,7 @@ public class MazeTableModel extends AbstractTableModel {
 	public static final ImageIcon BLOCKER = new ImageIcon("imgs/blocker.png");
 	public static final ImageIcon DRAGON = JDragon.sleeping();
 
-	private static final Object[][] data;
+	private static Object[][] data;
 
 	@Override
 	public int getColumnCount() {
@@ -57,7 +57,7 @@ public class MazeTableModel extends AbstractTableModel {
 		return ImageIcon.class;
 	}
 
-	static {
+	public static void init() {
 		data = new Object[Maze.HEIGHT][Maze.WIDTH];
 		try {
 			JFileChooser chooser = new JFileChooser(".");

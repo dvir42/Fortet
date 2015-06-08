@@ -69,6 +69,7 @@ public class Maze {
 		pane = new JLayeredPane();
 		prince = new JPrince();
 		pane.setBorder(new EtchedBorder());
+		MazeTableModel.init();
 		table = new JTable(new MazeTableModel());
 		table.setEnabled(false);
 		table.setBorder(new EtchedBorder());
