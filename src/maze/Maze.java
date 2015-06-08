@@ -20,6 +20,12 @@ import javax.swing.border.EtchedBorder;
 import user.Move;
 import user.Prince;
 
+/**
+ * The main class of the game. This is where the magic happens
+ * 
+ * @author dvir42
+ *
+ */
 public class Maze {
 
 	public static final int WIDTH = 10;
@@ -202,6 +208,9 @@ public class Maze {
 		timer.start();
 	}
 
+	/**
+	 * Opens the treasure chest at the current location
+	 */
 	private void openTreasure() {
 		for (int k = 0; k < 4; k++) {
 			table.setValueAt(treasures[currY][currX].step(), currY, currX);
@@ -215,6 +224,9 @@ public class Maze {
 			table.setValueAt(JTreasure.withRing(), currY, currX);
 	}
 
+	/**
+	 * Picks up whatever is in the current location
+	 */
 	private void pickup() {
 		try {
 			Thread.sleep(1000);
@@ -226,6 +238,9 @@ public class Maze {
 		table.setValueAt(JPrincess.sniffle(), princessI, princessJ);
 	}
 
+	/**
+	 * Awakens the dragon
+	 */
 	private void awakenTheBeast() {
 		try {
 			Thread.sleep(500);
@@ -236,6 +251,10 @@ public class Maze {
 		isDragonAwake = true;
 	}
 
+	/**
+	 * Randomly picks a treasure chest or a blocker and destroys it, replacing
+	 * it with the dragon
+	 */
 	private void destroySomething() {
 		boolean destroyedSomething = false;
 		while (!destroyedSomething) {
@@ -261,6 +280,10 @@ public class Maze {
 		}
 	}
 
+	/**
+	 * 
+	 * @return whether there still is something worth destroying
+	 */
 	private boolean somethingToDestroy() {
 		for (boolean[] row : blockers)
 			for (boolean blocker : row)
@@ -273,6 +296,9 @@ public class Maze {
 		return false;
 	}
 
+	/**
+	 * Returns the dragon to its original location and puts it to sleep
+	 */
 	private void putBeastToSleep() {
 		table.setValueAt(null, dragonI, dragonJ);
 		table.setValueAt(JDragon.sleeping(), startingDragonI, startingDragonJ);

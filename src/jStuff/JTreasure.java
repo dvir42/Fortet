@@ -5,6 +5,14 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
+/**
+ * Contains everything to do with treasure graphics, including switching
+ * pictures corresponding to the opening of a treasure chest and finding a ring
+ * inside
+ * 
+ * @author dvir42
+ *
+ */
 public class JTreasure {
 
 	private static final int rows = 4, cols = 1;
@@ -50,20 +58,37 @@ public class JTreasure {
 		return full;
 	}
 
+	/**
+	 * 
+	 * @return the next {@link ImageIcon} in the cycle of opening the treasure
+	 *         chest
+	 */
 	public ImageIcon step() {
 		if (count < rows)
 			return pics[count++][0];
 		return opened();
 	}
 
+	/**
+	 * 
+	 * @return an {@link ImageIcon} of a closed chest
+	 */
 	public static ImageIcon closed() {
 		return pics[0][0];
 	}
 
+	/**
+	 * 
+	 * @return an {@link ImageIcon} of an open chest
+	 */
 	public static ImageIcon opened() {
 		return pics[3][0];
 	}
 
+	/**
+	 * 
+	 * @return an {@link ImageIcon} of an open chest with a ring inside
+	 */
 	public static ImageIcon withRing() {
 		return withRing;
 	}

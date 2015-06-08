@@ -5,6 +5,12 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
+/**
+ * Contains different pictures of the princess
+ * 
+ * @author dvir42
+ *
+ */
 public class JPrincess {
 
 	private static final int rows = 4, cols = 3;
@@ -35,14 +41,26 @@ public class JPrincess {
 		}
 	}
 
+	/**
+	 * 
+	 * @return an {@link ImageIcon} of a crying princess
+	 */
 	public static ImageIcon cry() {
 		return pics[3][0];
 	}
 
+	/**
+	 * 
+	 * @return an {@link ImageIcon} of a sniffling princess
+	 */
 	public static ImageIcon sniffle() {
 		return pics[3][2];
 	}
 
+	/**
+	 * 
+	 * @return an {@link ImageIcon} of a happy princess
+	 */
 	public static ImageIcon happy() {
 		return pics[0][2];
 	}

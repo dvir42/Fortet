@@ -12,6 +12,12 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * A class that takes care of the table in use in {@link Maze}
+ * 
+ * @author dvir42
+ *
+ */
 public class MazeTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = -4347071534736678347L;
