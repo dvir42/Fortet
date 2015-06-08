@@ -19,4 +19,5 @@ public class Prince extends Human {
 			prince.stay();
 		}
 	}
+
 }
