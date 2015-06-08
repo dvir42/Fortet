@@ -1,5 +1,6 @@
 package maze;
 
+import jStuff.JDragon;
 import jStuff.JPrince;
 import jStuff.JPrincess;
 import jStuff.JTreasure;
@@ -48,6 +49,13 @@ public class Maze {
 
 	public static int princeI, princeJ;
 
+	private boolean isDragonAwake;
+	public static int startingDragonI, startingDragonJ;
+	private int dragonI;
+	private int dragonJ;
+	private int thingsDestroyed;
+	public static final int MAX_THINGS_DESTROYED = 4;
+
 	public Maze() {
 		JFrame frame = new JFrame("Maze");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,9 +77,13 @@ public class Maze {
 				table.getBounds().y + ROW_HEIGHT * princeI);
 		frame.setVisible(true);
 		moveCount = 0;
-		currX = 0;
-		currY = 0;
+		currX = princeJ;
+		currY = princeI;
 		hasRing = false;
+		thingsDestroyed = 0;
+		isDragonAwake = false;
+		dragonI = startingDragonI;
+		dragonJ = startingDragonJ;
 		timer = new Timer(66, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -97,10 +109,25 @@ public class Maze {
 								"Failed", 0);
 				} else {
 					if (moveCount == 0) {
+						if (isDragonAwake
+								&& thingsDestroyed < MAX_THINGS_DESTROYED
+								&& somethingToDestroy()) {
+							destroySomething();
+						} else if (isDragonAwake) {
+							putBeastToSleep();
+						}
 						if (blockers[currY][currX]) {
 							timer.stop();
 							JOptionPane.showMessageDialog(frame, "You crashed",
 									"Failed", 0);
+						} else if (currY == dragonI && currX == dragonJ) {
+							if (isDragonAwake) {
+								timer.stop();
+								JOptionPane.showMessageDialog(frame,
+										"You were killed", "Failed", 0);
+							} else {
+								awakenTheBeast();
+							}
 						}
 						moveCount = ROW_HEIGHT / MOVE;
 						switch (moves.remove(0)) {
@@ -122,7 +149,7 @@ public class Maze {
 							moveCount = 0;
 							if (((ImageIcon) table.getValueAt(currY, currX))
 									.equals(JTreasure.closed()))
-								openTreasure(currY, currX);
+								openTreasure();
 							else {
 								timer.stop();
 								JOptionPane.showMessageDialog(frame,
@@ -135,7 +162,7 @@ public class Maze {
 							moveCount = 0;
 							if (((ImageIcon) table.getValueAt(currY, currX))
 									.equals(JTreasure.withRing()))
-								pickup(currY, currX);
+								pickup();
 							else {
 								timer.stop();
 								JOptionPane.showMessageDialog(frame,
@@ -175,20 +202,20 @@ public class Maze {
 		timer.start();
 	}
 
-	private void openTreasure(int i, int j) {
+	private void openTreasure() {
 		for (int k = 0; k < 4; k++) {
-			table.setValueAt(treasures[i][j].step(), i, j);
+			table.setValueAt(treasures[currY][currX].step(), currY, currX);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		if (treasures[i][j].full())
-			table.setValueAt(JTreasure.withRing(), i, j);
+		if (treasures[currY][currX].full())
+			table.setValueAt(JTreasure.withRing(), currY, currX);
 	}
 
-	private void pickup(int i, int j) {
+	private void pickup() {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -197,6 +224,63 @@ public class Maze {
 		table.setValueAt(JTreasure.opened(), currY, currX);
 		hasRing = true;
 		table.setValueAt(JPrincess.sniffle(), princessI, princessJ);
+	}
+
+	private void awakenTheBeast() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		table.setValueAt(JDragon.awake(), currY, currX);
+		isDragonAwake = true;
+	}
+
+	private void destroySomething() {
+		boolean destroyedSomething = false;
+		while (!destroyedSomething) {
+			int i = (int) (Math.random() * HEIGHT);
+			int j = (int) (Math.random() * WIDTH);
+			if (blockers[i][j]) {
+				blockers[i][j] = false;
+				table.setValueAt(JDragon.awake(), i, j);
+				table.setValueAt(null, dragonI, dragonJ);
+				dragonI = i;
+				dragonJ = j;
+				destroyedSomething = true;
+				thingsDestroyed++;
+			} else if (treasures[i][j] != null) {
+				treasures[i][j] = null;
+				table.setValueAt(null, dragonI, dragonJ);
+				dragonI = i;
+				dragonJ = j;
+				table.setValueAt(JDragon.awake(), i, j);
+				destroyedSomething = true;
+				thingsDestroyed++;
+			}
+		}
+	}
+
+	private boolean somethingToDestroy() {
+		for (boolean[] row : blockers)
+			for (boolean blocker : row)
+				if (blocker)
+					return true;
+		for (JTreasure[] row : treasures)
+			for (JTreasure treasure : row)
+				if (treasure != null)
+					return true;
+		return false;
+	}
+
+	private void putBeastToSleep() {
+		table.setValueAt(null, dragonI, dragonJ);
+		table.setValueAt(JDragon.sleeping(), startingDragonI, startingDragonJ);
+		dragonI = startingDragonI;
+		dragonJ = startingDragonJ;
+		if (somethingToDestroy())
+			thingsDestroyed = 0;
+		isDragonAwake = false;
 	}
 
 	public static void main(String[] args) {

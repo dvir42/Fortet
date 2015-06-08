@@ -1,5 +1,6 @@
 package maze;
 
+import jStuff.JDragon;
 import jStuff.JPrincess;
 import jStuff.JTreasure;
 
@@ -18,6 +19,7 @@ public class MazeTableModel extends AbstractTableModel {
 	private static final ImageIcon PRINCESS = JPrincess.cry();
 	private static final ImageIcon TREASURE = JTreasure.closed();
 	private static final ImageIcon BLOCKER = new ImageIcon("imgs/blocker.png");
+	private static final ImageIcon DRAGON = JDragon.sleeping();
 
 	private static final Object[][] data;
 
@@ -76,6 +78,11 @@ public class MazeTableModel extends AbstractTableModel {
 					case 5:
 						Maze.princeI = i;
 						Maze.princeJ = j;
+						break;
+					case 6:
+						data[i][j] = DRAGON;
+						Maze.startingDragonI = i;
+						Maze.startingDragonJ = j;
 						break;
 					default:
 						data[i][j] = null;
