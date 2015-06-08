@@ -73,6 +73,10 @@ public class MazeTableModel extends AbstractTableModel {
 						data[i][j] = TREASURE;
 						Maze.treasures[i][j] = new JTreasure(true);
 						break;
+					case 5:
+						Maze.princeI = i;
+						Maze.princeJ = j;
+						break;
 					default:
 						data[i][j] = null;
 						break;

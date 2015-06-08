@@ -46,6 +46,8 @@ public class Maze {
 	private boolean hasRing;
 	public static int princessI, princessJ;
 
+	public static int princeI, princeJ;
+
 	public Maze() {
 		JFrame frame = new JFrame("Maze");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,7 +65,8 @@ public class Maze {
 		pane.add(table, JLayeredPane.DEFAULT_LAYER);
 		pane.add(prince, JLayeredPane.PALETTE_LAYER);
 		prince.setSize(ROW_HEIGHT, ROW_HEIGHT);
-		prince.setLocation(table.getBounds().x - 5, table.getBounds().y);
+		prince.setLocation(table.getBounds().x - 5 + ROW_HEIGHT * princeJ,
+				table.getBounds().y + ROW_HEIGHT * princeI);
 		frame.setVisible(true);
 		moveCount = 0;
 		currX = 0;
