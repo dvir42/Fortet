@@ -101,4 +101,12 @@ public class JPrince extends JLabel {
 		setIcon(pics[direction][status]);
 	}
 
+	/**
+	 * 
+	 * @return an {@link ImageIcon} of the prince in his default position
+	 */
+	public static ImageIcon defaultImage() {
+		return pics[2][0];
+	}
+
 }
