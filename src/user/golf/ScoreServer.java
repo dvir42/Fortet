@@ -12,55 +12,86 @@ import java.util.Comparator;
 
 public class ScoreServer {
 
-	public final int PORT = 2212;
+	private class ServerThread implements Runnable {
+
+		private final Socket socket;
+		private Database db;
+
+		public ServerThread(Socket socket) {
+			this.socket = socket;
+		}
+
+		@Override
+		public void run() {
+			try {
+				db = new Database();
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						socket.getInputStream()));
+				BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+						socket.getOutputStream()));
+				String entry = "";
+				while (!in.ready())
+					;
+				entry = in.readLine();
+				String name = entry.split("#")[0];
+				String score = entry.split("#")[1];
+				String maze = entry.split("#")[2];
+				db.insertUpdateDelete("insert into scores values('" + name
+						+ "'," + score + ",'" + maze + "')");
+				out.write(sort(db
+						.select("select name,score from scores where maze='"
+								+ maze + "'")) + '\n');
+				out.flush();
+				in.close();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	public static final int PORT = 42424;
+	public static final String HOST = "127.0.0.1";
 
 	private ServerSocket serverSocket;
-	private Database db;
 
 	public ScoreServer() {
 		try {
 			serverSocket = new ServerSocket(PORT);
-			db = new Database();
 			while (true) {
 				Socket socket = serverSocket.accept();
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						socket.getInputStream()));
-				String line = in.readLine();
-				in.close();
-				String name = line.split("|")[0];
-				String score = line.split("|")[1];
-				db.insertUpdateDelete("insert into scores values('" + name
-						+ "'," + score + ")");
-				BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-						socket.getOutputStream()));
-				out.write(sort(db.select("select * from scores")));
+				new Thread(new ServerThread(socket)).start();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * 
+	 * @param scores
+	 * @return a string representation of <b>scores</b> sorted
+	 */
 	private static String sort(String[][] scores) {
 		String sorted = "";
 		Arrays.sort(scores, new Comparator<String[]>() {
 			@Override
 			public int compare(String[] a, String[] b) {
-				return Integer.compare(Integer.parseInt(a[1]),
+				return Integer.max(Integer.parseInt(a[1]),
 						Integer.parseInt(b[1]));
 			}
 		});
 		for (String[] entry : scores) {
 			for (String value : entry)
-				sorted += value + " ";
-			sorted += '\n';
+				sorted += value + '#';
+			sorted += '~';
 		}
 		return sorted;
 	}
 
 	public static void main(String[] args) {
-		String[][] s = { { "asd", "4" }, { "qwe", "2" }, { "qwr", "1" },
-				{ "ter", "3" } };
-		System.out.println(ScoreServer.sort(s));
+		new ScoreServer();
 	}
 
 }

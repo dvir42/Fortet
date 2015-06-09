@@ -6,6 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * A class that helps connect to an SQL database and update it / retrieve
+ * information from it
+ * 
+ * @author dvir42
+ *
+ */
 public class Database {
 
 	private Connection con;
@@ -15,7 +22,6 @@ public class Database {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			con = DriverManager.getConnection(
 					"jdbc:mysql://127.0.0.1:3306/fortet", "root", "1234");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,7 +57,6 @@ public class Database {
 			Statement st = con.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
-
 			ResultSet res = st.executeQuery(command);
 			int m = res.getMetaData().getColumnCount();
 			res.last();

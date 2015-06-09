@@ -60,11 +60,12 @@ public class MazeTableModel extends AbstractTableModel {
 	public static void init() {
 		data = new Object[Maze.HEIGHT][Maze.WIDTH];
 		try {
-			JFileChooser chooser = new JFileChooser(".");
+			JFileChooser chooser = new JFileChooser("mazes");
 			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				List<String> temp = Files.readAllLines(chooser
 						.getSelectedFile().toPath());
+				Maze.mazename = chooser.getSelectedFile().getName();
 				for (int i = 0; i < Maze.HEIGHT; i++)
 					for (int j = 0; j < Maze.WIDTH; j++)
 						switch (Integer.parseInt(temp.get(i).split(" ")[j])) {

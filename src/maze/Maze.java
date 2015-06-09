@@ -1,16 +1,19 @@
 package maze;
 
 import jStuff.JDragon;
+import jStuff.JForm;
 import jStuff.JPrince;
 import jStuff.JPrincess;
 import jStuff.JTreasure;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -19,6 +22,9 @@ import javax.swing.border.EtchedBorder;
 
 import user.Move;
 import user.Prince;
+import user.golf.ByteCounter;
+import user.golf.Client;
+import user.golf.ScoreServer;
 
 /**
  * The main class of the game. This is where the magic happens
@@ -62,6 +68,8 @@ public class Maze {
 	private int thingsDestroyed;
 	public static final int MAX_THINGS_DESTROYED = 4;
 
+	public static String mazename;
+
 	public Maze() {
 		JFrame frame = new JFrame("Maze");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,8 +108,9 @@ public class Maze {
 						if (hasRing) {
 							table.setValueAt(JPrincess.happy(), princessI,
 									princessJ);
-							JOptionPane.showMessageDialog(frame, "Good Job",
-									"Successful", 1);
+							JOptionPane.showMessageDialog(frame, "You Won!",
+									"Success", 1);
+							submitScore();
 						} else
 							JOptionPane.showMessageDialog(frame,
 									"You have no ring", "Failed", 0);
@@ -316,6 +325,39 @@ public class Maze {
 		if (somethingToDestroy())
 			thingsDestroyed = 0;
 		isDragonAwake = false;
+	}
+
+	/**
+	 * Submits the score to the {@link ScoreServer}
+	 */
+	private synchronized void submitScore() {
+		JForm form = new JForm("Submit Score");
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				String name = form.getResult();
+				int score = ByteCounter.bytes();
+				Client c = new Client(name + "#" + score + "#" + mazename);
+				String[] temp = c.getServerString().split("~");
+				Object[][] scores = new String[temp.length][2];
+				for (int i = 0; i < 10 && i < temp.length; i++) {
+					scores[i][0] = temp[i].split("#")[0];
+					scores[i][1] = temp[i].split("#")[1];
+				}
+				String[] columnNames = { "Name", "Score" };
+				JFrame scoreFrame = new JFrame("High Scores");
+				scoreFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				JTable scoreTable = new JTable(scores, columnNames);
+				scoreTable.setEnabled(false);
+				scoreTable.setRowHeight(20);
+				scoreTable.setBounds(0, 0, 400, 20 * 11);
+				scoreFrame.add(scoreTable);
+				scoreFrame.add(new JLabel("Your score: " + score + ", Maze: "
+						+ mazename), BorderLayout.SOUTH);
+				scoreFrame.pack();
+				scoreFrame.setVisible(true);
+			}
+		}).start();
 	}
 
 	public static void main(String[] args) {

@@ -213,6 +213,18 @@ public class MazeBuilder implements ActionListener {
 			JOptionPane.showMessageDialog(frame, "Missing dragon", "Failed", 0);
 			return false;
 		}
+		boolean hasRing = false;
+		for (int i = 0; i < table.getRowCount(); i++)
+			for (int j = 0; j < table.getColumnCount(); j++)
+				if (table.getValueAt(i, j) == JTreasure.withRing()) {
+					hasRing = true;
+					break;
+				}
+		if (!hasRing) {
+			JOptionPane.showMessageDialog(frame, "Missing treasure with ring",
+					"Failed", 0);
+			return false;
+		}
 		return true;
 	}
 
