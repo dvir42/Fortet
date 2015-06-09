@@ -57,6 +57,9 @@ public class MazeTableModel extends AbstractTableModel {
 		return ImageIcon.class;
 	}
 
+	/**
+	 * Initializes the maze and its components
+	 */
 	public static void init() {
 		data = new Object[Maze.HEIGHT][Maze.WIDTH];
 		try {

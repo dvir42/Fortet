@@ -10,8 +10,21 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * A server which gets input from a completed game and stores it in an SQL
+ * database
+ * 
+ * @author dvir42
+ *
+ */
 public class ScoreServer {
 
+	/**
+	 * A thread which is run upon accepting a connection
+	 * 
+	 * @author dvir42
+	 *
+	 */
 	private class ServerThread implements Runnable {
 
 		private final Socket socket;

@@ -7,6 +7,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+/**
+ * A client class that connects to the {@link ScoreServer}, sends it a message,
+ * and gets a reply
+ * 
+ * @author dvir42
+ *
+ */
 public class Client {
 
 	private Socket socket;
@@ -33,6 +40,10 @@ public class Client {
 		}
 	}
 
+	/**
+	 * 
+	 * @return the string gotten from the {@link ScoreServer}
+	 */
 	public String getServerString() {
 		return serverString;
 	}

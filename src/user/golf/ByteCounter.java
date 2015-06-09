@@ -15,6 +15,11 @@ import user.Prince;
  */
 public class ByteCounter {
 
+	/**
+	 * 
+	 * @return number of bytes in class {@link Prince} without whitespace and
+	 *         comments
+	 */
 	public static int bytes() {
 		try {
 			byte[] bytes = Files.readAllBytes(new File("src/user/Prince.java")
@@ -47,10 +52,6 @@ public class ByteCounter {
 			e.printStackTrace();
 			return 0;
 		}
-	}
-
-	public static void main(String[] args) {
-		System.out.println(bytes());
 	}
 
 }

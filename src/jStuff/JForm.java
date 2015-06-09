@@ -9,6 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+/**
+ * A simple form with a text field and submit button
+ * 
+ * @author dvir42
+ *
+ */
 public class JForm extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = -8217358615628467671L;
@@ -38,6 +44,11 @@ public class JForm extends JFrame implements ActionListener {
 		dispose();
 	}
 
+	/**
+	 * Waits for user input
+	 * 
+	 * @return whatever was inside the text field
+	 */
 	public synchronized String getResult() {
 		try {
 			wait();
@@ -45,10 +56,6 @@ public class JForm extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 		return text.getText();
-	}
-
-	public static void main(String[] args) {
-		System.out.println(new JForm("").getResult());
 	}
 
 }
