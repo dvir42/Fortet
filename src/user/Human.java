@@ -62,6 +62,8 @@ public class Human {
 
 	/**
 	 * Adds a move to moves
+	 * 
+	 * @param move
 	 */
 	private void addMove(Move move) {
 		Maze.moves.add(move);
